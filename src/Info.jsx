@@ -6,24 +6,22 @@ export default function Info() {
   const [pageContent, setPageContent] = useState("");
   const [pageImages, setPageImages] = useState([]);
 
-  // let params = useParams();
-  // console.log(pageTitle);
+  let params = useParams();
+  console.log(pageTitle);
 
-  // useEffect(() => {
-  //   setPageTitle(params.pageTitle);
-  // }, []);
+  useEffect(() => {
+    setPageTitle(params.pageTitle);
+  }, []);
 
   const fetchPageData = async () => {
-    const pageContentUrl = `/api?action=parse&format=json&page=${pageTitle}&prop=text`;
-    const pageImagesUrl = `/api?action=query&format=json&titles=Book&prop=pageimages&piprop=original`;
+    const pageContentUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${pageTitle}&prop=text`;
+    const pageImagesUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${pageTitle}&prop=pageimages&piprop=original`;
 
     const [contentResponse, imagesResponse] = await Promise.all([
       fetch(pageContentUrl),
       fetch(pageImagesUrl),
     ]);
-    if (!contentResponse.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
+
     const contentData = await contentResponse.json();
     const imagesData = await imagesResponse.json();
 

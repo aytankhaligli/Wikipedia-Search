@@ -48,12 +48,11 @@ function App() {
 
   return (
     <div className="mt-20 w-full h-full flex flex-col items-center justify-center">
-      {/* <Routes>
+      <Routes>
         <Route element={<MainPage />} path="/" />
-        <Route element={<Info />} path="/wiki/:pageTitle" />
-      </Routes> */}
-      <MainPage />
-      <Info />
+        <Route element={<Info />} path="/:pageTitle" />
+      </Routes>
+
       {/* <img src={logo} alt="wikipediya logo" className="w-[150px]" />
       <div className="flex items-center justify-center my-10 relative">
         <input
