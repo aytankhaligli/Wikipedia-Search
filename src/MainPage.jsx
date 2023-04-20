@@ -3,10 +3,10 @@ import { BeatLoader } from "react-spinners";
 import Result from "./Result";
 import logo from "../logo.png";
 
-export default function MainPage() {
+export default function MainPage({ lang, setLang }) {
   const [inputValue, setInputValue] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [lang, setLang] = useState("en");
+
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -33,12 +33,12 @@ export default function MainPage() {
       const res = await fetch(
         `https://${lang}.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`
       );
-      // `https://en.wikipedia.org/w/api.php?action=parse&prop=revisions&utf8=&format=json&rvslots=*&rvprop=content&titles=kitab`
       if (!res.ok) {
         throw Error(response.statusText);
       }
       const data = await res.json();
-      setData(data.query.search);
+      const searchData = data?.query?.search;
+      setData(searchData);
       setIsLoading(false);
     } catch (err) {
       console.error(err);

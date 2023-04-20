@@ -9,17 +9,17 @@ export default function Result({ result, lang }) {
   const formattedSnippet = result.snippet.replace(/<[^>]*>?/gm, "");
 
   return (
-    <div className="w-full  border-b text-blue-900 flex flex-col  p-5 hover:bg-blue-200">
+    <Link
+      to={result.title}
+      className="w-full  border-b text-blue-900 flex flex-col  p-5 hover:bg-blue-200"
+    >
       <h1 className="font-bold">
-        {/* <a href={url} target="_blank" rel="noopener">
-          {result.title}
-        </a> */}
         <Link to={result.title}>{result.title}</Link>
       </h1>
-      <a href={url} className="text-blue-400" target="_blank" rel="noopener">
+      {/* <a href={url} className="text-blue-400" target="_blank" rel="noopener">
         {url}
-      </a>
+      </a> */}
       <span>{formattedSnippet}</span>
-    </div>
+    </Link>
   );
 }

@@ -1,46 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-export default function Info() {
-  const [pageTitle, setPageTitle] = useState("book");
+export default function Info({ lang }) {
+  const [pageTitle, setPageTitle] = useState("Book");
   const [pageContent, setPageContent] = useState("");
-  const [pageImages, setPageImages] = useState([]);
 
-  let params = useParams();
-  console.log(pageTitle);
+  const params = useParams();
 
-  useEffect(() => {
-    setPageTitle(params.pageTitle);
-  }, []);
+  const url =
+    `https://${lang}.wikipedia.org/w/api.php?` +
+    new URLSearchParams({
+      origin: "*",
+      action: "parse",
+      page: pageTitle,
+      format: "json",
+    });
 
   const fetchPageData = async () => {
-    const pageContentUrl = `https://en.wikipedia.org/w/api.php?action=parse&format=json&page=${pageTitle}&prop=text`;
-    const pageImagesUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${pageTitle}&prop=pageimages&piprop=original`;
-
-    const [contentResponse, imagesResponse] = await Promise.all([
-      fetch(pageContentUrl),
-      fetch(pageImagesUrl),
-    ]);
-
-    const contentData = await contentResponse.json();
-    const imagesData = await imagesResponse.json();
-
-    const pageContent = contentData?.parse?.text?.["*"];
-    const pageImages = Object.values(imagesData?.query?.pages)[0]?.original
-      ?.source;
-    console.log(contentData, imagesData);
-    setPageContent(pageContent);
-    setPageImages(pageImages);
+    try {
+      const req = await fetch(url);
+      const json = await req.json();
+      const pageContent = json.parse.text["*"];
+      setPageContent(pageContent);
+    } catch (e) {
+      console.error(e);
+    }
   };
-
   useEffect(() => {
     fetchPageData();
+    setPageTitle(params.pageTitle);
   }, [pageTitle]);
-
   return (
-    <div>
-      <h1>{pageTitle}</h1>
-      <img src={pageImages} alt={`${pageTitle} image`} />
+    <div className="bg-gray-50 p-5 text-gray-800">
+      <h1 className="text-2xl text-blue-900 mb-5">{pageTitle}</h1>
+
       <div dangerouslySetInnerHTML={{ __html: pageContent }} />
     </div>
   );
