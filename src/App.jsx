@@ -5,46 +5,46 @@ import MainPage from "./MainPage";
 import Info from "./Info";
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [lang, setLang] = useState("en");
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
+  // const [inputValue, setInputValue] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [lang, setLang] = useState("en");
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [data, setData] = useState([]);
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setInputValue(e.target.value);
+  // };
 
-  const hanleClick = () => {
-    setSearchQuery(inputValue.trim());
-    setIsLoading(true);
-  };
+  // const hanleClick = () => {
+  //   setSearchQuery(inputValue.trim());
+  //   setIsLoading(true);
+  // };
 
-  const changLang = (e) => {
-    setLang(e.target.value);
-  };
+  // const changLang = (e) => {
+  //   setLang(e.target.value);
+  // };
 
-  useEffect(() => {
-    setData("");
-    getData();
-  }, [searchQuery, lang]);
+  // useEffect(() => {
+  //   setData("");
+  //   getData();
+  // }, [searchQuery, lang]);
 
-  const getData = async () => {
-    try {
-      const res = await fetch(
-        `https://${lang}.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`
-      );
+  // const getData = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://${lang}.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchQuery}`
+  //     );
 
-      if (!res.ok) {
-        throw Error(response.statusText);
-      }
-      const data = await res.json();
-      setData(data.query.search);
-      setIsLoading(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //     if (!res.ok) {
+  //       throw Error(response.statusText);
+  //     }
+  //     const data = await res.json();
+  //     setData(data.query.search);
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <div className="mt-20 w-full h-full flex flex-col items-center justify-center">
